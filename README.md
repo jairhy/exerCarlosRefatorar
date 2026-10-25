@@ -4,17 +4,18 @@ API REST (Node.js + Express + Sequelize + MySQL) e frontend em HTML/CSS/JS.
 
 ## Estrutura
 ```
-backend/    API (models, controller, middleware, utils, db, test, teste.http)
-frontend/   Telas (login, home, clientes, consoles, agendamentos)
-docs/       Documentacao_PixelFix.docx/.pdf (RF, RNF, RN, infraestrutura, DER, classes, plano de testes)
-            diagramas/ (der.png, classes.png e fontes .dot)
+backend/    API Node.js, banco, modelos, testes e requisições REST Client
+frontend/   Telas HTML, estilos CSS e scripts do navegador
+docs/       Documentação do sistema e diagramas
 ```
+
+> Instale dependências, execute testes e faça alterações da API dentro de `backend/`.
 
 ## Como rodar
 1. Instale Node.js 20+ e MySQL 8 (ou MariaDB 10.6+) e inicie o banco.
-2. Crie o banco, tabelas e dados de exemplo:
+2. Crie o banco, tabelas e dados de exemplo (o script apaga e recria `db_pixelfix`):
    `mysql -u root -p < backend/db/db_pixelfix.sql`
-3. Em `backend/`: ajuste `.env` (usuário/senha do banco; padrão root/root), depois:
+3. Em `backend/`, copie `.env.example` para `.env` e ajuste usuário e senha do banco; depois:
    ```
    npm install
    npm start        # http://localhost:3000
@@ -24,7 +25,7 @@ docs/       Documentacao_PixelFix.docx/.pdf (RF, RNF, RN, infraestrutura, DER, c
    - Login de teste: `carlos@gmail.com` / `123456` (também mariana@ e rafael@gmail.com)
 
 ## Testes de integração
-- Automatizados: `cd backend && npm test` (29 casos, precisa do banco criado)
+- Automatizados: dentro de `backend/`, execute `npm test` (29 casos; precisa do banco criado)
 - Manuais: abra `backend/teste.http` no VS Code (extensão REST Client) e execute na ordem.
 
 ## Segurança

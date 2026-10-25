@@ -1,5 +1,5 @@
 /* ===== Utilitários compartilhados (sessão, API, menu superior) ===== */
-const API = 'http://localhost:3000'
+const API = window.PIXELFIX_API_URL || 'http://localhost:3000'
 const CHAVE_SESSAO = 'pixelfix_sessao'
 
 function getSessao() {
@@ -23,7 +23,7 @@ function salvarSessao(dados) {
 
 function sair(expirou = false) {
     localStorage.removeItem(CHAVE_SESSAO)
-    location.href = 'login.html' + (expirou ? '?expirou=1' : '')
+    location.href = new URL(`login.html${expirou ? '?expirou=1' : ''}`, location.href).href
 }
 
 // Chamada à API com o token Bearer. Em 401 com sessão ativa, encerra a sessão.

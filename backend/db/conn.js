@@ -4,7 +4,7 @@ const { Sequelize } = require('sequelize')
 const db = new Sequelize(
     process.env.DB_NAME || 'db_pixelfix',
     process.env.DB_USER || 'root',
-    process.env.DB_PASS || '201271hy',
+    process.env.DB_PASS || 'root',
     {
         host: process.env.DB_HOST || 'localhost',
         port: Number(process.env.DB_PORT) || 3306,
