@@ -1,0 +1,233 @@
+### =====================================================================
+### PixelFix - Rotas de teste de integração (extensão "REST Client" do VS Code)
+### Pré-requisitos: banco populado com os dados de demonstração de db/db_pixelfix.sql e API rodando (npm start).
+### Atenção: o script SQL apaga e recria o banco. Não o execute se houver dados que deseja preservar.
+### Execute na ordem: o login guarda o token e o cadastro guarda o ID da cliente criada.
+### =====================================================================
+@host = http://localhost:3000
+
+### ---------- 0. Rota raiz ----------
+GET {{host}}/
+
+### ---------- 1. LOGIN ----------
+### 1.1 Login válido (esperado 200 + token com expiração de 90 min)
+# @name login
+POST {{host}}/login
+Content-Type: application/json
+
+{
+  "email": "carlos@gmail.com",
+  "senha": "123456"
+}
+
+@token = {{login.response.body.token}}
+
+### 1.2 Login sem dados (esperado 400)
+POST {{host}}/login
+Content-Type: application/json
+
+{}
+
+### 1.3 Senha incorreta (esperado 401)
+POST {{host}}/login
+Content-Type: application/json
+
+{
+  "email": "carlos@gmail.com",
+  "senha": "senhaerrada"
+}
+
+### 1.4 Rota protegida sem token (esperado 401)
+GET {{host}}/clientes
+
+### 1.5 Token inválido (esperado 401)
+GET {{host}}/clientes
+Authorization: Bearer token-invalido
+
+### 1.6 Cliente logado (esperado 200)
+GET {{host}}/me
+Authorization: Bearer {{token}}
+
+### ---------- 2. CLIENTE (CRUD) ----------
+### 2.1 Cadastrar cliente - rota pública (esperado 201)
+# @name cadastroAna
+POST {{host}}/cliente
+Content-Type: application/json
+
+{
+  "nome": "Ana Paula Costa",
+  "email": "ana@gmail.com",
+  "senha": "abc12345",
+  "cpf": "529.982.247-25",
+  "telefone": "(47) 99999-1111"
+}
+
+@codClienteAna = {{cadastroAna.response.body.cliente.codCliente}}
+
+### 2.2 CPF inválido (esperado 400)
+POST {{host}}/cliente
+Content-Type: application/json
+
+{
+  "nome": "Teste",
+  "email": "teste@gmail.com",
+  "senha": "123456",
+  "cpf": "111.111.111-11",
+  "telefone": "47999991111"
+}
+
+### 2.3 E-mail/CPF duplicado (esperado 409)
+POST {{host}}/cliente
+Content-Type: application/json
+
+{
+  "nome": "Carlos Duplicado",
+  "email": "carlos@gmail.com",
+  "senha": "123456",
+  "cpf": "529.982.247-25",
+  "telefone": "47999991111"
+}
+
+### 2.4 Listar clientes - CPF mascarado (esperado 200)
+GET {{host}}/clientes
+Authorization: Bearer {{token}}
+
+### 2.5 Buscar cliente por id - CPF completo (esperado 200)
+GET {{host}}/clientes/1
+Authorization: Bearer {{token}}
+
+### 2.6 Atualizar cliente (esperado 200)
+PUT {{host}}/clientes/{{codClienteAna}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nome": "Ana Paula Costa Atualizada",
+  "email": "ana@gmail.com",
+  "cpf": "529.982.247-25",
+  "telefone": "47999991111"
+}
+
+### 2.7 Excluir cliente com consoles vinculados (esperado 409)
+DELETE {{host}}/clientes/2
+Authorization: Bearer {{token}}
+
+### 2.8 Excluir cliente sem vínculos (esperado 200) - remove a cliente criada em 2.1
+DELETE {{host}}/clientes/{{codClienteAna}}
+Authorization: Bearer {{token}}
+
+### ---------- 3. CONSOLE ----------
+### 3.1 Cadastrar console vinculado ao cliente (esperado 201)
+POST {{host}}/console
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "modelo": "Xbox Series S",
+  "marca": "Microsoft",
+  "numeroSerie": "SN-XBS-777001",
+  "tipoServico": "Troca de fonte",
+  "codCliente": 3
+}
+
+### 3.2 Série duplicada (esperado 409)
+POST {{host}}/console
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "modelo": "Xbox Series S",
+  "marca": "Microsoft",
+  "numeroSerie": "SN-XBS-777001",
+  "tipoServico": "Troca de fonte",
+  "codCliente": 3
+}
+
+### 3.3 Cliente inexistente (esperado 404)
+POST {{host}}/console
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "modelo": "PS5",
+  "marca": "Sony",
+  "numeroSerie": "SN-PS5-999999",
+  "tipoServico": "Limpeza",
+  "codCliente": 9999
+}
+
+### 3.4 Listar todos (série mascarada) (esperado 200)
+GET {{host}}/consoles
+Authorization: Bearer {{token}}
+
+### 3.5 Consulta por termo - número do console (esperado 200)
+GET {{host}}/consoles?termo=1
+Authorization: Bearer {{token}}
+
+### 3.6 Consulta por termo - número de série (esperado 200)
+GET {{host}}/consoles?termo=SN-XBS-777001
+Authorization: Bearer {{token}}
+
+### 3.7 Consultar console por id - série completa (esperado 200)
+GET {{host}}/consoles/1
+Authorization: Bearer {{token}}
+
+### ---------- 4. AGENDAMENTO ----------
+### 4.1 Cadastrar agendamento (esperado 201)
+POST {{host}}/agendamento
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "dataHora": "2026-12-01T10:00",
+  "codCliente": 1,
+  "codConsole": 1
+}
+
+### 4.2 Data no passado (esperado 400)
+POST {{host}}/agendamento
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "dataHora": "2020-01-06T10:00",
+  "codCliente": 1,
+  "codConsole": 1
+}
+
+### 4.3 Console de outro cliente (esperado 409)
+POST {{host}}/agendamento
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "dataHora": "2026-12-02T10:00",
+  "codCliente": 2,
+  "codConsole": 1
+}
+
+### 4.4 Conflito de horário (esperado 409) - mesmo horário do 4.1
+POST {{host}}/agendamento
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "dataHora": "2026-12-01T10:30",
+  "codCliente": 2,
+  "codConsole": 2
+}
+
+### 4.5 Listar ordenado por data (esperado 200)
+GET {{host}}/agendamentos
+Authorization: Bearer {{token}}
+
+### 4.6 Atualizar agendamento (esperado 200)
+PUT {{host}}/agendamentos/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "dataHora": "2026-11-10T11:00",
+  "codCliente": 1,
+  "codConsole": 1
+}
