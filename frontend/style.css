@@ -1,0 +1,212 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #1778bc;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+}
+
+/* ===== Menu superior ===== */
+.topo {
+    background-color: #01274b;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    margin-bottom: 24px;
+}
+
+.topo nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6px 14px;
+    padding: 10px 12px;
+}
+
+.topo .grupo {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding-left: 10px;
+    border-left: 2px solid rgba(255, 255, 255, 0.25);
+}
+
+.topo .usuario {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+}
+
+nav a {
+    text-decoration: none;
+    font-size: 1.05rem;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 16px;
+}
+
+nav a[aria-current="page"] {
+    background-color: rgba(255, 255, 255, 0.25);
+    font-weight: bold;
+}
+
+a:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+    transition: ease 0.7s;
+}
+
+.titulo_menu {
+    color: #8fd0ff;
+    font-size: 1.05rem;
+    font-weight: bold;
+}
+
+/* acessibilidade: link "pular para o conteúdo" e foco visível */
+.pular {
+    position: absolute;
+    left: -9999px;
+    background: white;
+    color: #01274b;
+    padding: 8px 16px;
+    z-index: 20;
+}
+
+.pular:focus {
+    left: 8px;
+    top: 8px;
+}
+
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+    outline: 3px solid #ffd54a;
+    outline-offset: 2px;
+}
+
+/* ===== Conteúdo ===== */
+main, footer {
+    text-align: center;
+    padding: 0 12px 40px;
+}
+
+h1 {
+    font-size: 2.4rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+input, button, select {
+    background-color: black;
+    border-radius: 16px;
+    text-align: center;
+    padding: 8px 4px;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: bold;
+    width: 300px;
+    max-width: 100%;
+    font-size: 1.20rem;
+}
+
+select {
+    text-align-last: center;
+}
+
+label {
+    font-size: 1.20rem;
+    font-weight: bold;
+}
+
+button {
+    cursor: pointer;
+    background-color: black;
+    color: #8fd0ff;
+    border: 2px solid white;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #01274b;
+}
+
+.btn-peq {
+    width: auto;
+    font-size: 0.95rem;
+    padding: 4px 14px;
+}
+
+.btn-peq.perigo {
+    color: #ffb4b4;
+}
+
+.btn-link {
+    display: inline-block;
+    color: white;
+    background: black;
+    border: 2px solid white;
+    border-radius: 16px;
+    padding: 4px 14px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.destaque {
+    color: #ffd54a;
+    font-weight: bold;
+}
+
+.link-extra {
+    margin-top: 18px;
+}
+
+.resposta {
+    font-size: 1.20rem;
+    font-weight: bold;
+    margin: 15px auto;
+    max-width: 600px;
+    border-radius: 12px;
+}
+
+.resposta:empty {
+    display: none;
+}
+
+.resposta.sucesso { background: rgba(26, 140, 60, 0.9); padding: 10px; }
+.resposta.erro { background: rgba(170, 30, 30, 0.9); padding: 10px; }
+.resposta.aviso { background: rgba(0, 0, 0, 0.35); padding: 10px; }
+
+/* ===== Tabelas ===== */
+.tabela-wrap {
+    overflow-x: auto;
+}
+
+table {
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+th {
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+th, td {
+    border: 2px solid white;
+    padding: 10px;
+    text-align: center;
+    color: white;
+}
+
+@media (max-width: 700px) {
+    h1 { font-size: 1.8rem; }
+    .topo .usuario { margin-left: 0; width: 100%; justify-content: center; }
+}

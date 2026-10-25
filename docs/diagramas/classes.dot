@@ -1,0 +1,30 @@
+digraph Classes {
+  rankdir=TB; nodesep=0.8; ranksep=1.1;
+  node [shape=plain fontname="Helvetica" fontsize=12];
+  edge [fontname="Helvetica" fontsize=11];
+
+  Cliente [label=<
+  <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" BGCOLOR="white">
+    <TR><TD BGCOLOR="#1778bc"><FONT COLOR="white"><B>Cliente</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT" BALIGN="LEFT">- codCliente : int<BR/>- nome : string<BR/>- email : string<BR/>- senha : string (hash bcrypt)<BR/>- cpf : string (AES-256)<BR/>- telefone : string</TD></TR>
+    <TR><TD ALIGN="LEFT" BALIGN="LEFT">+ cadastrarCliente()<BR/>+ listarClientes()<BR/>+ buscarCliente(id)<BR/>+ atualizarCliente(id)<BR/>+ excluirCliente(id)<BR/>+ login(email, senha) : token</TD></TR>
+  </TABLE>>];
+
+  Console [label=<
+  <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" BGCOLOR="white">
+    <TR><TD BGCOLOR="#1778bc"><FONT COLOR="white"><B>Console</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT" BALIGN="LEFT">- codConsole : int<BR/>- modelo : string<BR/>- marca : string<BR/>- numeroSerie : string (AES-256)<BR/>- tipoServico : string<BR/>- codCliente : int</TD></TR>
+    <TR><TD ALIGN="LEFT" BALIGN="LEFT">+ cadastrarConsole()<BR/>+ listarConsoles(termo)<BR/>+ consultarConsole(id)</TD></TR>
+  </TABLE>>];
+
+  Agendamento [label=<
+  <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" BGCOLOR="white">
+    <TR><TD BGCOLOR="#1778bc"><FONT COLOR="white"><B>Agendamento</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT" BALIGN="LEFT">- codAgendamento : int<BR/>- dataHora : datetime<BR/>- codCliente : int<BR/>- codConsole : int</TD></TR>
+    <TR><TD ALIGN="LEFT" BALIGN="LEFT">+ cadastrarAgendamento()<BR/>+ atualizarAgendamento(id)<BR/>+ listarAgendamentos() : ordenado por dataHora<BR/>+ buscarAgendamento(id)</TD></TR>
+  </TABLE>>];
+
+  Cliente -> Console [arrowhead=none headlabel="0..*  " taillabel="1  " label="possui"];
+  Cliente -> Agendamento [arrowhead=none headlabel="0..*  " taillabel="1  " label="solicita"];
+  Console -> Agendamento [arrowhead=none headlabel="0..*  " taillabel="1  " label="é reparado em"];
+}

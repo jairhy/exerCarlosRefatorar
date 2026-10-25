@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./app.js" defer></script>
+    <script src="./agendamento_cadastrar.js" defer></script>
+    <title>Agendamento - PixelFix</title>
+</head>
+<body>
+    <main id="conteudo">
+        <h1 id="titulo">Cadastrar Agendamento</h1><br>
+        <form id="form_agendamento" novalidate>
+            <label for="codCliente">Cliente</label><br>
+            <select id="codCliente" required><option value="">Carregando...</option></select><br><br>
+
+            <label for="codConsole">Console do cliente</label><br>
+            <select id="codConsole" required><option value="">Selecione o cliente primeiro</option></select><br><br>
+
+            <label for="data">Data</label><br>
+            <input type="date" id="data" required><br><br>
+
+            <label for="hora">Horário (08:00 às 17:30)</label><br>
+            <input type="time" id="hora" min="08:00" max="17:30" step="1800" required><br><br>
+
+            <button type="submit" id="btn_salvar">Cadastrar</button>
+        </form>
+        <div id="resposta" class="resposta" role="status" aria-live="polite"></div>
+    </main>
+</body>
+</html>

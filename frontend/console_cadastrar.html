@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./app.js" defer></script>
+    <script src="./console_cadastrar.js" defer></script>
+    <title>Cadastrar Console - PixelFix</title>
+</head>
+<body>
+    <main id="conteudo">
+        <h1>Cadastrar Console</h1><br>
+        <form id="form_console" novalidate>
+            <label for="codCliente">Cliente</label><br>
+            <select id="codCliente" required><option value="">Carregando...</option></select><br><br>
+
+            <label for="modelo">Modelo (ex: PlayStation 5)</label><br>
+            <input type="text" id="modelo" maxlength="50" required><br><br>
+
+            <label for="marca">Marca (ex: Sony, Nintendo)</label><br>
+            <input type="text" id="marca" maxlength="50" required><br><br>
+
+            <label for="numeroSerie">Número de série</label><br>
+            <input type="text" id="numeroSerie" maxlength="30" autocomplete="off" required><br><br>
+
+            <label for="tipoServico">Tipo de serviço</label><br>
+            <input type="text" id="tipoServico" maxlength="100" required><br><br>
+
+            <button type="submit">Cadastrar</button>
+        </form>
+        <div id="resposta" class="resposta" role="status" aria-live="polite"></div>
+    </main>
+</body>
+</html>

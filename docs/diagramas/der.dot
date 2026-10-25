@@ -1,0 +1,40 @@
+digraph DER {
+  rankdir=TB; nodesep=1.2; ranksep=1.1;
+  node [shape=plain fontname="Helvetica" fontsize=12];
+  edge [fontname="Helvetica" fontsize=11];
+
+  clientes [label=<
+  <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" BGCOLOR="white">
+    <TR><TD BGCOLOR="#1778bc" COLSPAN="3"><FONT COLOR="white"><B>clientes</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT">codCliente</TD><TD ALIGN="LEFT">INT AI</TD></TR>
+    <TR><TD></TD><TD ALIGN="LEFT">nome</TD><TD ALIGN="LEFT">VARCHAR(100)</TD></TR>
+    <TR><TD ALIGN="LEFT">UQ</TD><TD ALIGN="LEFT">email</TD><TD ALIGN="LEFT">VARCHAR(100)</TD></TR>
+    <TR><TD></TD><TD ALIGN="LEFT">senha 🔒</TD><TD ALIGN="LEFT">VARCHAR(100) bcrypt</TD></TR>
+    <TR><TD ALIGN="LEFT">UQ</TD><TD ALIGN="LEFT">cpf 🔒</TD><TD ALIGN="LEFT">VARCHAR(120) AES-256</TD></TR>
+    <TR><TD></TD><TD ALIGN="LEFT">telefone</TD><TD ALIGN="LEFT">VARCHAR(15)</TD></TR>
+  </TABLE>>];
+
+  consoles [label=<
+  <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" BGCOLOR="white">
+    <TR><TD BGCOLOR="#1778bc" COLSPAN="3"><FONT COLOR="white"><B>consoles</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT">codConsole</TD><TD ALIGN="LEFT">INT AI</TD></TR>
+    <TR><TD></TD><TD ALIGN="LEFT">modelo</TD><TD ALIGN="LEFT">VARCHAR(50)</TD></TR>
+    <TR><TD></TD><TD ALIGN="LEFT">marca</TD><TD ALIGN="LEFT">VARCHAR(50)</TD></TR>
+    <TR><TD ALIGN="LEFT">UQ</TD><TD ALIGN="LEFT">numeroSerie 🔒</TD><TD ALIGN="LEFT">VARCHAR(120) AES-256</TD></TR>
+    <TR><TD></TD><TD ALIGN="LEFT">tipoServico</TD><TD ALIGN="LEFT">VARCHAR(100)</TD></TR>
+    <TR><TD ALIGN="LEFT"><B>FK</B></TD><TD ALIGN="LEFT">codCliente</TD><TD ALIGN="LEFT">INT</TD></TR>
+  </TABLE>>];
+
+  agendamentos [label=<
+  <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" BGCOLOR="white">
+    <TR><TD BGCOLOR="#1778bc" COLSPAN="3"><FONT COLOR="white"><B>agendamentos</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT">codAgendamento</TD><TD ALIGN="LEFT">INT AI</TD></TR>
+    <TR><TD></TD><TD ALIGN="LEFT">dataHora</TD><TD ALIGN="LEFT">DATETIME</TD></TR>
+    <TR><TD ALIGN="LEFT"><B>FK</B></TD><TD ALIGN="LEFT">codCliente</TD><TD ALIGN="LEFT">INT</TD></TR>
+    <TR><TD ALIGN="LEFT"><B>FK</B></TD><TD ALIGN="LEFT">codConsole</TD><TD ALIGN="LEFT">INT</TD></TR>
+  </TABLE>>];
+
+  clientes -> consoles [arrowtail=tee arrowhead=crow dir=both label="  possui (1:N)  "];
+  clientes -> agendamentos [arrowtail=tee arrowhead=crow dir=both label="  solicita (1:N)  "];
+  consoles -> agendamentos [arrowtail=tee arrowhead=crow dir=both label="  é reparado em (1:N)  "];
+}

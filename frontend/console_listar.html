@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./app.js" defer></script>
+    <script src="./console_listar.js" defer></script>
+    <title>Listar Consoles - PixelFix</title>
+</head>
+<body>
+    <main id="conteudo">
+        <h1>Consoles</h1><br>
+        <form id="form_busca" role="search">
+            <label for="termo">Consultar por termo (nº do console, nº de série, modelo ou marca)</label><br>
+            <input type="text" id="termo" autocomplete="off"><br><br>
+            <button type="submit">Buscar</button>
+        </form>
+        <div id="resposta" class="resposta" role="status" aria-live="polite"></div>
+        <div class="tabela-wrap" id="tabela"></div>
+    </main>
+</body>
+</html>

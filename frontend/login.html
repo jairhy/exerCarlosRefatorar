@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./app.js" defer></script>
+    <script src="./login.js" defer></script>
+    <title>Login - PixelFix</title>
+</head>
+<body>
+    <main id="conteudo">
+        <h1>PixelFix Games</h1>
+        <h2>Acesse o sistema</h2><br>
+        <form id="form_login" novalidate>
+            <label for="email">E-mail</label><br>
+            <input type="email" id="email" autocomplete="username" required><br><br>
+
+            <label for="senha">Senha</label><br>
+            <input type="password" id="senha" autocomplete="current-password" required><br><br>
+
+            <button type="submit">Entrar</button>
+        </form>
+        <div id="resposta" class="resposta" role="status" aria-live="polite"></div>
+        <p class="link-extra">Ainda não tem conta? <a class="destaque" href="./cliente_cadastrar.html">Cadastre-se</a></p>
+    </main>
+</body>
+</html>
